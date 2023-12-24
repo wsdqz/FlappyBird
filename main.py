@@ -1,7 +1,6 @@
 import random
 import pgzrun
 import os
-import time
 from pgzhelper import *
 
 # окно
@@ -24,14 +23,14 @@ ground.y = 465
 bird = Actor('bird1')
 bird.x = 75
 bird.y = 100
-bird.images = ['bird1', 'bird2', 'bird3', 'bird4']
-bird.fps = 10
+bird.images = ['bird1', 'bird2', 'bird3', 'bird4']  # pgzhelper
+bird.fps = 10   # pgzhelper
 
 # надпись в конце игры
 gameover = Actor('gameover')
 gameover.x = 320
 gameover.y = 150
-gameover.scale = 0.6
+gameover.scale = 0.8    # pgzhelper
 
 # трубы
 top_pipe = Actor('top')
@@ -70,6 +69,7 @@ def on_mouse_down():
         bird.x = 75
         bird.y = 100
 
+hide_mouse() # pgzhelper
 # отрисовка
 def update():
     global score, maxscore, start, bg, last_bg_delay, bg_delay
@@ -81,11 +81,11 @@ def update():
             current_time = time.time()
             if current_time - last_bg_delay > bg_delay:
                 bg = (bg + 1) % len(bg_list)
-                screen.blit(bg_list[bg], (0,0))
+                screen.blit(bg_list[bg], (0,0)) # рисование фона
                 last_bg_delay = current_time
 
     # птичка
-    bird.animate()
+    bird.animate()  # pgzhelper
     bird.y += bird.speed
     bird.speed += gravity
     if bird.y > HEIGHT-40 or bird.y < -150:
@@ -100,11 +100,11 @@ def update():
     top_pipe.x += pipe_speed
     bottom_pipe.x += pipe_speed
     if top_pipe.x < -50:
-        move = random.uniform(-100, -200)
-        gap = 150
+        move = random.uniform(-100, -200)   # случайная высота
+        gap = 150   # промежуток
         top_pipe.midleft = (WIDTH, move)
         bottom_pipe.midleft = (WIDTH, move+top_pipe.height+gap)
-        score += 1 # + очко
+        score += 1
         sounds.point.play()
 
     # столкновение
@@ -129,7 +129,7 @@ def draw():
         ground.draw()
     # когда умирает
     else:
-        screen.draw.text("НАЖМИ ЧТОБЫ ИГРАТЬ ЕЩЕ РАЗ", color =(252,160,72), center=(320, 240), shadow=(0.5,0.5), scolor=(230,111,46), fontsize=27)
+        screen.draw.text("НАЖМИ ЧТОБЫ ИГРАТЬ ЕЩЕ РАЗ", color =(252, 160, 72), center=(320, 240), shadow=(0.5, 0.5), scolor='black', fontsize=27)
         gameover.draw()
         ground.draw()
         bird.image = 'birddead'
@@ -137,8 +137,8 @@ def draw():
         top_pipe.x = WIDTH
         bottom_pipe.x = WIDTH
         bird.draw()
-    screen.draw.text("Счет: " + str(score), color=(176,224,218), midtop=(55, 10), shadow=(0.5,0.5), scolor='black', fontsize=30)
-    screen.draw.text("Рекорд: " + str(maxscore), color=(196,181,111), midtop=(65, 455), shadow=(0.5,0.5), scolor='black', fontsize=30)
+    screen.draw.text("Счет: " + str(score), color=(176, 224, 218), midtop=(55, 10), shadow=(0.5, 0.5), scolor='black', fontsize=30)
+    screen.draw.text("Рекорд: " + str(maxscore), color=(196, 181, 111), midtop=(65, 455), shadow=(0.5, 0.5), scolor='black', fontsize=30)
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pgzrun.go()
