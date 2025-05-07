@@ -1,1 +1,1 @@
-Сессия для дисциплины ИКТ. Нархоз 1 курс 1 семестр 2023
+FlappyBird written on Python with PGZHelper
